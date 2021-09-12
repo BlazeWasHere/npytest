@@ -3,7 +3,6 @@
 
 import nertivia
 
-from npytest.mock import configure
 import npytest
 
 client = nertivia.Bot()
@@ -31,7 +30,7 @@ async def on_message(message: nertivia.Message):
 
 
 if __name__ == '__main__':
-    configure(client)
+    npytest.configure(client)
 
     assert not npytest.message('hello')
     assert npytest.message('!ping')[0].content == 'pong'

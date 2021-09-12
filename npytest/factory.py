@@ -45,7 +45,7 @@ def make_message(message: str) -> nertivia.Message:
 
 def make_channel(channel_id: int) -> nertivia.Channel:
     data = {
-        'name': 'dpytest',
+        'name': 'npytest',
         'channelID': channel_id,
         'server_id': '0000000000000000000'
     }
@@ -58,7 +58,7 @@ def make_server(server_id: int) -> nertivia.Server:
         '_id': server_id,
         'avatar': None,
         'channel_position': [],
-        'name': 'dpytest',
+        'name': 'npytest',
         'creator': {
             'id': '0000000000000000000'
         },
@@ -79,7 +79,7 @@ def make_user(user_id: int) -> nertivia.User:
         "user": {
             "_id": "000000000000000000000000",
             "avatar": None,
-            "username": "dpytest",
+            "username": "npytest",
             "tag": "1337",
             "created": 0000000000000,
             "about_me": {
