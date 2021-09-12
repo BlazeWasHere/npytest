@@ -26,5 +26,5 @@ def get_callback(event: str) -> Optional[Callback]:
     return _callbacks.get(event)
 
 
-def remote_callback(event: str) -> Optional[Callback]:
+def remove_callback(event: str) -> Optional[Callback]:
     return _callbacks.pop(event, None)

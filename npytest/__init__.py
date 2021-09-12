@@ -2,3 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from .mock import configure, message
+
+# Not an official release yet, still in dev.
+__version__ = '0.0.0'
+__all__ = ['configure', 'message']

@@ -120,3 +120,29 @@ def make_server(server_id: int) -> nertivia.Server:
     obj.http = MockHTTPClient()
 
     return obj
+
+
+def make_user(user_id: int) -> nertivia.User:
+    data = {
+        "user": {
+            "_id": "000000000000000000000000",
+            "avatar": None,
+            "username": "dpytest",
+            "tag": "1337",
+            "created": 0000000000000,
+            "about_me": {
+                "_id": "000000000000000000000000",
+                "gender": "foo",
+                "age": "foo",
+                "continent": "foo",
+                "country": "foo",
+                "about_me": "foo"
+            },
+            "id": user_id
+        },
+        "commonServersArr": [],
+        "commonFriendsArr": [],
+        "isBlocked": False
+    }
+
+    return nertivia.User(data)

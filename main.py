@@ -33,5 +33,5 @@ async def on_message(message: nertivia.Message):
 if __name__ == '__main__':
     configure(client)
 
-    print(npytest.message('hello'))
-    print(npytest.message('!ping'))
+    assert not npytest.message('hello')
+    assert npytest.message('!ping')[0].content == 'pong'
