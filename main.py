@@ -38,4 +38,7 @@ if __name__ == '__main__':
     assert mes.content == 'hi'
     assert npytest.edit(mes, 'bye').content == 'bye'
 
+    mes.id = 1
+    assert npytest.edit(mes, 'foo') is None
+
     assert npytest.message('!ping')[1].content == 'pong'

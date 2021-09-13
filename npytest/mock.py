@@ -90,6 +90,10 @@ def edit(msg: nertivia.Message, content: str) -> nertivia.Message:
     # Clear previous message states.
     _message_ids.clear()
 
-    asyncio.run(msg.edit(content))
+    try:
+        asyncio.run(msg.edit(content))
+    except KeyError:
+        # `msg` does not exist.
+        return None
 
     return msg
