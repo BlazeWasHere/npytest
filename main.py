@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import asyncio
+
 import nertivia
 
 import npytest
@@ -32,5 +34,10 @@ async def on_message(message: nertivia.Message):
 if __name__ == '__main__':
     npytest.configure(client)
 
-    assert not npytest.message('hello')
-    assert npytest.message('!ping')[0].content == 'pong'
+    assert len(npytest.message('hello')) == 1
+
+    mes = npytest.message('hi')[0]
+    assert mes.content == 'hi'
+    assert npytest.edit(mes, 'bye').content == 'bye'
+
+    assert npytest.message('!ping')[1].content == 'pong'

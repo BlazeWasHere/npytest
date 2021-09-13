@@ -6,8 +6,8 @@ import asyncio
 
 import nertivia
 
+from .factory import make_message, _messages, _message_ids
 from .callbacks import set_callback, dispatch_event
-from .factory import make_message, _messages
 from .http import MockHTTPClient
 
 
@@ -27,10 +27,25 @@ def configure(bot: nertivia.Bot):
 
 def message(msg: str) -> List[nertivia.Message]:
     obj = make_message(msg)
-    # Clear `_messages` to remove any data from the last run.
-    _messages.clear()
+    # Clear previous message states.
+    _message_ids.clear()
 
     if not asyncio.run(dispatch_event('receiveMessage', obj)):
         raise TypeError('receiveMessage callback has not been set')
 
-    return _messages
+    ret = [obj]
+
+    if _message_ids:
+        # Make and fill an array with every message which has been added.
+        ret += [_messages.get(i) for i in _message_ids]
+
+    return ret
+
+
+def edit(msg: nertivia.Message, content: str) -> nertivia.Message:
+    # Clear previous message states.
+    _message_ids.clear()
+
+    asyncio.run(msg.edit(content))
+
+    return msg

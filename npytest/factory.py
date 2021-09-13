@@ -2,24 +2,43 @@
 # -*- coding: utf-8 -*-
 
 from typing import List
+import random
 
+from nertivia.cache_nertivia_data import LimitedCache
 import nertivia
 
 from .http import MockHTTPClient
 
-_messages: List[nertivia.Message] = []
+# Our representation of nertivia.cache_nertivia_data.messages.
+_messages = LimitedCache()
+# Used internally to keep messages in sync within funcs.
+_message_ids: List[int] = []
 
 
 class MockMessage(nertivia.Message):
-    async def send(self, message: str) -> None:
+    async def send(self, message: str) -> nertivia.Message:
         mes = make_message(message)
-        _messages.append(mes)
+        _messages[mes.id] = mes
+        _message_ids.append(mes.id)
+
+        return mes
+
+    async def edit(self, content) -> None:
+        _messages[self.id].content = content
+        _message_ids.append(self.id)
 
 
 class MockChannel(nertivia.Channel):
-    async def send(self, message: str) -> None:
+    async def send(self, message: str) -> nertivia.Message:
         mes = make_message(message)
-        _messages.append(mes)
+        _messages[mes.id] = mes
+        _message_ids.append(mes.id)
+
+        return mes
+
+
+def _random_id() -> int:
+    return random.randrange(10000000000000000000)
 
 
 def make_message(message: str) -> nertivia.Message:
@@ -36,11 +55,14 @@ def make_message(message: str) -> nertivia.Message:
             'created': 0000000000000,
             'mentions': [],
             'quotes': [],
-            'messageID': '0000000000000000000'
+            'messageID': _random_id()
         }
     }
 
-    return MockMessage(data, http=MockHTTPClient())
+    obj = MockMessage(data, http=MockHTTPClient())
+    _messages[obj.id] = obj
+
+    return obj
 
 
 def make_channel(channel_id: int) -> nertivia.Channel:
