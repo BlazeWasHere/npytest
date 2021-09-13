@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from typing import List
+from typing import List, Optional
 import random
 
 from nertivia.cache_nertivia_data import LimitedCache
@@ -27,6 +27,9 @@ class MockMessage(nertivia.Message):
         _messages[self.id].content = content
         _message_ids.append(self.id)
 
+    async def delete(self) -> None:
+        del _messages[self.id]
+
 
 class MockChannel(nertivia.Channel):
     async def send(self, message: str) -> nertivia.Message:
@@ -35,6 +38,9 @@ class MockChannel(nertivia.Channel):
         _message_ids.append(mes.id)
 
         return mes
+
+    async def get_message(self, message_id: str) -> Optional[nertivia.Message]:
+        return _messages.get(message_id)
 
 
 def _random_id() -> int:

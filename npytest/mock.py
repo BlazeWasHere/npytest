@@ -37,7 +37,7 @@ def message(msg: str) -> List[nertivia.Message]:
 
     if _message_ids:
         # Make and fill an array with every message which has been added.
-        ret += [_messages.get(i) for i in _message_ids]
+        ret += [_messages[i] for i in _message_ids]
 
     return ret
 
