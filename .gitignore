@@ -1,3 +1,4 @@
 .nvimlog
 .nvim/
 **/__pycache__
+.pytest_cache/
