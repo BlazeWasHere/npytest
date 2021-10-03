@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from typing import List
+from typing import List, Optional
 import asyncio
 
 import nertivia
@@ -72,7 +72,7 @@ def message(msg: str) -> List[nertivia.Message]:
     return ret
 
 
-def edit(msg: nertivia.Message, content: str) -> nertivia.Message:
+def edit(msg: nertivia.Message, content: str) -> Optional[nertivia.Message]:
     """
     Edit a mock nertivia.Message and change it's content to `content`.
 
